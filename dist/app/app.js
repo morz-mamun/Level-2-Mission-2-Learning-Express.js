@@ -39,7 +39,7 @@ const logger = (req, res, next) => {
 };
 app.get("/", logger, (req, res, next) => {
     try {
-        res.send(something);
+        res.send("Hello world!");
     }
     catch (error) {
         console.log(error);
@@ -49,6 +49,13 @@ app.get("/", logger, (req, res, next) => {
 app.post("/", logger, (req, res) => {
     console.log(req.body);
     res.send("got data");
+});
+// route error handling
+app.all("*", (req, res) => {
+    res.status(400).json({
+        success: false,
+        message: "Route Not Found.",
+    });
 });
 // global error handler
 app.use((error, req, res, next) => {
